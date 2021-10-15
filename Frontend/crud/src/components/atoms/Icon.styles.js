@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Icon = styled.td`
+ const Icon = styled.td`
   text-align: center;
   padding: 0.75rem;
   border-top: 1px solid #dee2e6;
@@ -10,3 +10,6 @@ export const Icon = styled.td`
     background-color: #e7cbcb;
   }
 `;
+
+
+export default Icon

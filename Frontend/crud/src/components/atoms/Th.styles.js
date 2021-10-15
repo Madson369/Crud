@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
-export const Th = styled.th`
+ const Th = styled.th`
   
 `;
+
+export default Th

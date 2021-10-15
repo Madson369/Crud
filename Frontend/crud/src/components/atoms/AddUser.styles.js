@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AddButton = styled.button`
+const AddButton = styled.button`
   text-align: center;
   padding: 0.75rem;
   cursor: pointer;
@@ -20,3 +20,5 @@ export const AddButton = styled.button`
     background-color: #e7cbcb;
   }
 `;
+
+export default AddButton

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Close = styled.button`
+ const Close = styled.button`
   text-align: center;
   padding: 0.75rem;
   cursor: pointer;
@@ -18,3 +18,5 @@ export const Close = styled.button`
     background-color: #e7cbcb;
   }
 `;
+
+export default Close

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
-export const LabelForm = styled.label`
+ const LabelForm = styled.label`
   text-align: center;
 `;
+
+export default LabelForm

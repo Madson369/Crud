@@ -7,17 +7,22 @@ import {
   editUser,
   getUserLogin,
 } from "./components/GetData";
-import { Input } from "./components/atoms/ItemInput.styles";
-import { Td } from "./components/atoms/Td.styles";
-import { Th } from "./components/atoms/Th.styles";
-import { Close } from "./components/atoms/X.styles";
-import { LabelForm } from "./components/atoms/Label.styles";
-import { Table } from "./components/atoms/table.styles";
-import { FormSpan } from "./components/atoms/TextForm.styles";
-import { AddButton } from "./components/atoms/AddUser.styles";
-import { Button } from "./components/atoms/SendButton.styles";
-import { Form } from "./components/atoms/Form.styles";
-import { Icon } from "./components/atoms/Icon.styles";
+import {
+  Input,
+  Td,
+  Th,
+  Modal,
+  Close,
+  LabelForm,
+  Table,
+  FormSpan,
+  AddButton,
+  Button,
+  FormCont,
+  Form,
+  Icon,
+} from "./components/atoms/index";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -108,137 +113,135 @@ function App() {
               })
             : null}
         </Table>
-        {visible ? (
-          <div className="form_container">
-            <Close
-              onClick={() => {
-                setVisible(false);
+        <Modal visible={visible} visibleEdit={visibleEdit} />
+
+        <FormCont visible={visible}>
+          <Close
+            onClick={() => {
+              setVisible(false);
+            }}
+          >
+            {" "}
+            <FontAwesomeIcon icon={faTimes} />
+          </Close>{" "}
+          <FormSpan>Criar Usuário</FormSpan>
+          <Form
+            action="http://localhost:3000/user"
+            autocomplete="off"
+            method="POST"
+          >
+            <LabelForm>Nome</LabelForm>
+            <Input type="text" id="Nome" placeholder="Nome"></Input>
+            <LabelForm>Login</LabelForm>
+            <Input
+              onChange={onChange}
+              type="text"
+              id="login"
+              placeholder="Login"
+              onBlur={onBlur}
+            ></Input>
+            <LabelForm>CPF</LabelForm>
+            <Input type="text" id="CPF" placeholder="CPF"></Input>
+            <LabelForm>Email</LabelForm>
+            <Input type="text" id="Email" placeholder="E-mail"></Input>
+            <LabelForm>AgentCode</LabelForm>
+            <Input
+              type="text"
+              id="AgentCode"
+              placeholder="Codigo de agente"
+            ></Input>
+            <Button
+              onClick={(ev) => {
+                ev.preventDefault();
+
+                let user = {
+                  Nome: document.getElementById("Nome").value,
+                  login: document.getElementById("login").value,
+                  CPF: document.getElementById("CPF").value,
+                  Email: document.getElementById("Email").value,
+                  AgentCode: document.getElementById("AgentCode").value,
+                };
+
+                saveUser(user, dispatch);
               }}
             >
-              {" "}
-              <FontAwesomeIcon icon={faTimes} />
-            </Close>{" "}
-            <FormSpan>Criar Usuário</FormSpan>
-            <Form
-              action="http://localhost:3000/user"
-              autocomplete="off"
-              method="POST"
-            >
-              <LabelForm>Nome</LabelForm>
-              <Input type="text" id="Nome" placeholder="Nome"></Input>
-              <LabelForm>Login</LabelForm>
-              <Input
-                onChange={onChange}
-                type="text"
-                id="login"
-                placeholder="Login"
-                onBlur={onBlur}
-              ></Input>
-              <LabelForm>CPF</LabelForm>
-              <Input type="text" id="CPF" placeholder="CPF"></Input>
-              <LabelForm>Email</LabelForm>
-              <Input type="text" id="Email" placeholder="E-mail"></Input>
-              <LabelForm>AgentCode</LabelForm>
-              <Input
-                type="text"
-                id="AgentCode"
-                placeholder="Codigo de agente"
-              ></Input>
-              <Button
-                onClick={(ev) => {
-                  ev.preventDefault();
+              Enviar
+            </Button>
+          </Form>
+        </FormCont>
 
-                  let user = {
-                    Nome: document.getElementById("Nome").value,
-                    login: document.getElementById("login").value,
-                    CPF: document.getElementById("CPF").value,
-                    Email: document.getElementById("Email").value,
-                    AgentCode: document.getElementById("AgentCode").value,
-                  };
+        <FormCont visible={visibleEdit}>
+          <Close
+            onClick={() => {
+              setVisibleEdit(false);
+            }}
+          >
+            {" "}
+            <FontAwesomeIcon icon={faTimes} />
+          </Close>{" "}
+          <FormSpan>Editar Usuário</FormSpan>
+          <Form
+            action="http://localhost:3000/user"
+            autocomplete="off"
+            method="POST"
+          >
+            <LabelForm>Nome</LabelForm>
+            <Input
+              type="text"
+              id="Nome"
+              defaultValue={currentUser.Nome}
+              placeholder="Nome"
+            ></Input>
+            <LabelForm>Login</LabelForm>
+            <Input
+              type="text"
+              id="login"
+              defaultValue={currentUser.login}
+              placeholder="Login"
+            ></Input>
+            <LabelForm>CPF</LabelForm>
+            <Input
+              type="text"
+              id="CPF"
+              defaultValue={currentUser.CPF}
+              placeholder="CPF"
+            ></Input>
+            <LabelForm>E-mail</LabelForm>
+            <Input
+              type="text"
+              id="Email"
+              defaultValue={currentUser.Email}
+              placeholder="E-mail"
+            ></Input>
+            <LabelForm>AgentCode</LabelForm>
+            <Input
+              type="text"
+              id="AgentCode"
+              defaultValue={currentUser.AgentCode}
+              placeholder="Codigo de agente"
+            ></Input>
+            <Button
+              onClick={(ev) => {
+                ev.preventDefault();
 
-                  saveUser(user, dispatch);
-                }}
-              >
-                Enviar
-              </Button>
-            </Form>
-          </div>
-        ) : null}
+                let user = {
+                  Nome: document.getElementById("Nome").value,
+                  login: document.getElementById("login").value,
+                  CPF: document.getElementById("CPF").value,
+                  Email: document.getElementById("Email").value,
+                  AgentCode: document.getElementById("AgentCode").value,
+                };
 
-        {visibleEdit ? (
-          <div className="form_container">
-            <Close
-              onClick={() => {
-                setVisibleEdit(false);
+                console.log(user);
+                // let userJson = JSON.stringify(user);
+
+                editUser(user, currentUser.id, dispatch);
               }}
             >
-              {" "}
-              <FontAwesomeIcon icon={faTimes} />
-            </Close>{" "}
-            <FormSpan>Editar Usuário</FormSpan>
-            <Form
-              action="http://localhost:3000/user"
-              autocomplete="off"
-              method="POST"
-            >
-              <LabelForm>Nome</LabelForm>
-              <Input
-                type="text"
-                id="Nome"
-                defaultValue={currentUser.Nome}
-                placeholder="Nome"
-              ></Input>
-              <LabelForm>Login</LabelForm>
-              <Input
-                type="text"
-                id="login"
-                defaultValue={currentUser.login}
-                placeholder="Login"
-              ></Input>
-              <LabelForm>CPF</LabelForm>
-              <Input
-                type="text"
-                id="CPF"
-                defaultValue={currentUser.CPF}
-                placeholder="CPF"
-              ></Input>
-              <LabelForm>E-mail</LabelForm>
-              <Input
-                type="text"
-                id="Email"
-                defaultValue={currentUser.Email}
-                placeholder="E-mail"
-              ></Input>
-              <LabelForm>AgentCode</LabelForm>
-              <Input
-                type="text"
-                id="AgentCode"
-                defaultValue={currentUser.AgentCode}
-                placeholder="Codigo de agente"
-              ></Input>
-              <Button
-                onClick={(ev) => {
-                  ev.preventDefault();
-
-                  let user = {
-                    Nome: document.getElementById("Nome").value,
-                    login: document.getElementById("login").value,
-                    CPF: document.getElementById("CPF").value,
-                    Email: document.getElementById("Email").value,
-                    AgentCode: document.getElementById("AgentCode").value,
-                  };
-
-                  console.log(user);
-                  // let userJson = JSON.stringify(user);
-
-                  editUser(user, currentUser.id, dispatch);
-                }}
-              >
-                Enviar
-              </Button>
-            </Form>
-          </div>
-        ) : null}
+              Enviar
+            </Button>
+          </Form>
+        </FormCont>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
-export const Table = styled.table`
+ const Table = styled.table`
   margin: auto;
 `;
+
+export default Table

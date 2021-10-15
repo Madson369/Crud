@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
-export const FormSpan = styled.span`
+ const FormSpan = styled.span`
   position: absolute;
 `;
+
+
+export default FormSpan

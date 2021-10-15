@@ -11,7 +11,7 @@ const FormCont = styled.div`
   border: 1px solid #e7cbcb;
   border-radius: 18px;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
-  left: 709px;
+  left: 800px;
   bottom: 250px;
 `;
 

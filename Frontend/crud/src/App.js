@@ -5,12 +5,15 @@ import {
   deleteUser,
   saveUser,
   editUser,
+  getUserLogin,
 } from "./components/GetData";
 import { Input } from "./components/atoms/ItemInput.styles";
 import { Td } from "./components/atoms/Td.styles";
 import { Th } from "./components/atoms/Th.styles";
 import { Close } from "./components/atoms/X.styles";
+import { LabelForm } from "./components/atoms/Label.styles";
 import { Table } from "./components/atoms/table.styles";
+import { FormSpan } from "./components/atoms/TextForm.styles";
 import { AddButton } from "./components/atoms/AddUser.styles";
 import { Button } from "./components/atoms/SendButton.styles";
 import { Form } from "./components/atoms/Form.styles";
@@ -28,11 +31,13 @@ import {
 function App() {
   const dispatch = useDispatch();
   let users = useSelector((state) => state.data);
-  let deleted = useSelector((state) => state.deleted);
+  let result = useSelector((state) => state.result);
+  let Login = useSelector((state) => state.login);
 
   const [visible, setVisible] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [evento, setEvento] = useState("");
 
   useEffect(() => {
     getAllUsers(dispatch);
@@ -40,7 +45,21 @@ function App() {
 
   useEffect(() => {
     getAllUsers(dispatch);
-  }, [deleted]);
+  }, [result]);
+
+  const onChange = (event) => {
+    setEvento(event.target.value);
+    console.log(evento);
+  };
+
+  const onBlur = () => {
+    console.log(evento);
+    if (evento.length > 0) {
+      getUserLogin(evento, dispatch);
+      console.log(Login);
+      console.log(typeof Login);
+    }
+  };
 
   return (
     <div className="container">
@@ -99,13 +118,27 @@ function App() {
               {" "}
               <FontAwesomeIcon icon={faTimes} />
             </Close>{" "}
-            <span>Criar usuario</span>
-            <Form action="http://localhost:3000/user" method="POST">
-              <label>Nome</label>
+            <FormSpan>Criar Usuário</FormSpan>
+            <Form
+              action="http://localhost:3000/user"
+              autocomplete="off"
+              method="POST"
+            >
+              <LabelForm>Nome</LabelForm>
               <Input type="text" id="Nome" placeholder="Nome"></Input>
-              <Input type="text" id="login" placeholder="Login"></Input>
+              <LabelForm>Login</LabelForm>
+              <Input
+                onChange={onChange}
+                type="text"
+                id="login"
+                placeholder="Login"
+                onBlur={onBlur}
+              ></Input>
+              <LabelForm>CPF</LabelForm>
               <Input type="text" id="CPF" placeholder="CPF"></Input>
+              <LabelForm>Email</LabelForm>
               <Input type="text" id="Email" placeholder="E-mail"></Input>
+              <LabelForm>AgentCode</LabelForm>
               <Input
                 type="text"
                 id="AgentCode"
@@ -122,9 +155,6 @@ function App() {
                     Email: document.getElementById("Email").value,
                     AgentCode: document.getElementById("AgentCode").value,
                   };
-
-                  console.log(user);
-                  // let userJson = JSON.stringify(user);
 
                   saveUser(user, dispatch);
                 }}
@@ -145,32 +175,41 @@ function App() {
               {" "}
               <FontAwesomeIcon icon={faTimes} />
             </Close>{" "}
-            <Form action="http://localhost:3000/user" method="POST">
-              <label>Nome</label>
+            <FormSpan>Editar Usuário</FormSpan>
+            <Form
+              action="http://localhost:3000/user"
+              autocomplete="off"
+              method="POST"
+            >
+              <LabelForm>Nome</LabelForm>
               <Input
                 type="text"
                 id="Nome"
                 defaultValue={currentUser.Nome}
                 placeholder="Nome"
               ></Input>
+              <LabelForm>Login</LabelForm>
               <Input
                 type="text"
                 id="login"
                 defaultValue={currentUser.login}
                 placeholder="Login"
               ></Input>
+              <LabelForm>CPF</LabelForm>
               <Input
                 type="text"
                 id="CPF"
                 defaultValue={currentUser.CPF}
                 placeholder="CPF"
               ></Input>
+              <LabelForm>E-mail</LabelForm>
               <Input
                 type="text"
                 id="Email"
                 defaultValue={currentUser.Email}
                 placeholder="E-mail"
               ></Input>
+              <LabelForm>AgentCode</LabelForm>
               <Input
                 type="text"
                 id="AgentCode"

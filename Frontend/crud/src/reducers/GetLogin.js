@@ -1,6 +1,6 @@
-const deletedUserReducer = (state = [], action) => {
+const getLoginReducer = (state = [], action) => {
   switch (action.type) {
-    case "DELETED":
+    case "LOGIN":
       state = [action.payload];
       return state;
 
@@ -9,4 +9,4 @@ const deletedUserReducer = (state = [], action) => {
   }
 };
 
-export default deletedUserReducer;
+export default getLoginReducer;

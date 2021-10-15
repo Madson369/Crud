@@ -11,12 +11,12 @@ const userSchema = yup.object({
   Email: yup.string().email().required(),
   AgentCode: yup
     .string()
+    .required()
     .test("Digits only", "AgentCode deve conter somente digitos", (value) =>
       /^\d+$/.test(value)
     )
     .min(6)
-    .max(6)
-    .required(),
+    .max(6),
 });
 
 module.exports = userSchema;

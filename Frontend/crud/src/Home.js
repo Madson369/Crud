@@ -61,9 +61,6 @@ function Home() {
         console.log("tudo ok");
         setVisible(false);
         setVisibleEdit(false);
-        toast.success("", {
-          position: toast.POSITION.TOP_CENTER
-        });
       }
     } catch (error) {}
   }, [result]);

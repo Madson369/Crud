@@ -24,6 +24,7 @@ import {
 } from "./components/atoms/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { login } from "./actions/GetLogin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashAlt,
@@ -31,7 +32,7 @@ import {
   faTimes,
   faUserEdit,
 } from "@fortawesome/free-solid-svg-icons";
-import { login } from "./actions/GetLogin";
+import { toast } from "react-toastify";
 
 function Home() {
   const dispatch = useDispatch();
@@ -53,10 +54,16 @@ function Home() {
     try {
       if (result[0].isAxiosError) {
         console.log(result[0].response.data.error.errors[0]);
+        toast.error(`${result[0].response.data.error.errors[0]}`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       } else {
         console.log("tudo ok");
         setVisible(false);
         setVisibleEdit(false);
+        toast.success("", {
+          position: toast.POSITION.TOP_CENTER
+        });
       }
     } catch (error) {}
   }, [result]);
@@ -68,10 +75,12 @@ function Home() {
 
   const onBlur = () => {
     console.log(evento);
-    if (evento.length > 0) {
-      getUserLogin(evento, dispatch);
-    } else {
-      dispatch(login({}));
+    if (evento !== currentUser.login) {
+      if (evento.length > 0) {
+        getUserLogin(evento, dispatch);
+      } else {
+        dispatch(login({}));
+      }
     }
   };
 

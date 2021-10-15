@@ -5,6 +5,7 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  getUserLogin,
 } from "./controller/UserController";
 
 const routes = Router();
@@ -20,4 +21,5 @@ routes.get("/user/:id", getUser);
 routes.post("/user", validation(userSchema), saveUser);
 routes.put("/user/:id", validation(userSchema), updateUser);
 routes.delete("/user/:id", deleteUser);
+routes.get("/user/login/:id", getUserLogin);
 export default routes;

@@ -45,7 +45,6 @@ async function deleteUser(id, dispatch) {
 
 async function saveUser(info, dispatch) {
   try {
-    console.log(info);
     const response = await api.post(`/user`, info);
     console.log(response.data);
     dispatch(result(response.data));
@@ -53,6 +52,7 @@ async function saveUser(info, dispatch) {
   } catch (error) {
     console.error(error);
     console.log(error.response.data.error.message);
+    dispatch(result(error));
     dispatch(geterror(error.response.data.error.message));
   }
 }
@@ -66,8 +66,9 @@ async function editUser(info, id, dispatch) {
     return response;
   } catch (error) {
     console.error(error);
-    console.log(error.response.data.error.message);
+    dispatch(result(error));
     dispatch(geterror(error.response.data.error.message));
+    console.log(error.response.data.error.message);
   }
 }
 

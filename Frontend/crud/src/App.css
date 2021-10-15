@@ -4,12 +4,13 @@
 }
 
 .container {
-  height: 100vh;
+  height: auto;
   background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding-top: 200px;
 }
 
 .table {
@@ -23,22 +24,7 @@
   border-width: 0.2rem;
   border-width: 2.5px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  position: relative;
+  /* position: relative; */
   width: 886px;
   max-width: 886px;
-}
-
-.form_container {
-  display: flex;
-  position: absolute;
-  background-color: white;
-  border: 1px solid black;
-  width: 300px;
-  height: 300px;
-  bottom: 15px;
-  left: 350px;
-  padding: 1.5rem;
-  border: 1px solid #e7cbcb;
-  border-radius: 18px;
-  box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
 }

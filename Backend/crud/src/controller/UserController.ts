@@ -13,12 +13,12 @@ export const getUser = async (request: Request, response: Response) => {
   const { id } = request.params;
 
   const user = await getRepository(User).findOne(id);
-  return response.json(user);
+  return response.status(200).json(user);
 };
 
 export const saveUser = async (request: Request, response: Response) => {
   const user = await getRepository(User).save(request.body);
-  return response.json(user);
+  return response.status(200).json(user);
 };
 
 export const updateUser = async (request: Request, response: Response) => {
@@ -28,7 +28,7 @@ export const updateUser = async (request: Request, response: Response) => {
 
   if (user.affected === 1) {
     const userUpdated = await getRepository(User).findOne(id);
-    return response.json(userUpdated);
+    return response.status(200).json(userUpdated);
   }
   return response.status(404).json({ message: "User not found" });
 };
@@ -40,7 +40,7 @@ export const deleteUser = async (request: Request, response: Response) => {
 
   if (user.affected === 1) {
     const userUpdated = await getRepository(User).findOne(id);
-    return response.json({ message: `User ${id} deleted` });
+    return response.status(200).json({ message: `User ${id} deleted` });
   }
   return response.status(404).json({ message: "User not found" });
 };
